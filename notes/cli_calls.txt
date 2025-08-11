@@ -1,0 +1,317 @@
+# =============================================================================
+# AI PORTFOLIO MANAGER (AIPM) - COMPREHENSIVE CLI USAGE EXAMPLES
+# =============================================================================
+#
+# This file contains extensive command-line usage examples for the AIPM system.
+# For detailed system architecture and technical documentation, see:
+# - notes/SYSTEM_ARCHITECTURE.md (system components, analysts, database schema)
+# - README.md (setup instructions, prerequisites, parameter reference)
+#
+# =============================================================================
+# SETUP AND ACTIVATION
+# =============================================================================
+
+# Activate virtual environment and run analysis
+# Windows:
+source aipm-venv/Scripts/activate && python main.py --ticker MSFT --date 2021-10-01 --debug
+
+# Unix/Linux/Mac:
+# source aipm-venv/bin/activate && python main.py --ticker MSFT --date 2021-10-01 --debug
+
+# =============================================================================
+# DATABASE CREATION AND POPULATION
+# =============================================================================
+
+# IMPORTANT: If you get a "DATABASE NOT FOUND" error, you need to create and 
+# populate the database first. Use the standalone database creation script:
+
+# Create database with default tickers (recommended for getting started)
+python create_db.py
+
+# Create database with custom tickers
+python create_db.py --tickers AAPL MSFT GOOGL AMZN TSLA
+
+# Create database with specific date range
+python create_db.py --tickers AAPL MSFT --start-date 2020-01-01 --end-date 2023-12-31
+
+# Create database with custom name
+python create_db.py --db-name my_custom_db.db --tickers AAPL MSFT
+
+# Force recreate existing database
+python create_db.py --force --tickers AAPL MSFT GOOGL
+
+# Alternative: Direct Python commands (for advanced users)
+python -c "from data.create_and_populate_db import create_and_populate_db; create_and_populate_db(['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'META', 'NVDA', 'JPM', 'V', 'WMT'], 'aipm_thesis.db')"
+
+# Note: Database creation takes 10-15 minutes depending on number of tickers
+# Make sure you have valid API keys in your .env file:
+# - ALPHA_VANTAGE_API_KEY (for financial statements)
+# - FRED_API_KEY (for macroeconomic data)
+
+# =============================================================================
+# SINGLE TICKER ANALYSIS
+# =============================================================================
+
+# Single ticker complete analysis - debug mode (saves to test folder)
+python main.py --ticker MSFT --date 2021-10-01 --debug
+
+# Single ticker complete analysis - main mode (saves to database)
+python main.py --ticker MSFT --date 2021-10-01
+
+# Single ticker single analyst - debug mode (saves to test folder)
+python main.py --ticker MSFT --date 2021-10-01 --analyst fundamentals --debug
+python main.py --ticker MSFT --date 2021-10-01 --analyst valuation --debug
+python main.py --ticker MSFT --date 2021-10-01 --analyst technical --debug
+python main.py --ticker MSFT --date 2021-10-01 --analyst risk --debug
+python main.py --ticker MSFT --date 2021-10-01 --analyst sentiment --debug
+python main.py --ticker MSFT --date 2021-10-01 --analyst macro --debug
+
+# Single ticker single analyst - main mode (saves to test folder)
+python main.py --ticker MSFT --date 2021-10-01 --analyst fundamentals
+python main.py --ticker MSFT --date 2021-10-01 --analyst valuation
+python main.py --ticker MSFT --date 2021-10-01 --analyst technical
+python main.py --ticker MSFT --date 2021-10-01 --analyst risk
+python main.py --ticker MSFT --date 2021-10-01 --analyst sentiment
+python main.py --ticker MSFT --date 2021-10-01 --analyst macro
+
+# =============================================================================
+# BATCH TICKER ANALYSIS (SINGLE DATE)
+# =============================================================================
+
+# Multiple tickers complete analysis - debug mode (saves to test folder)
+python main.py --tickers AAPL MSFT GOOGL --date 2021-10-01 --debug
+
+# Multiple tickers complete analysis - main mode (saves to database)
+python main.py --tickers AAPL MSFT GOOGL --date 2021-10-01
+
+# Multiple tickers single analyst - debug mode (saves to test folder)
+python main.py --tickers AAPL MSFT --date 2021-10-01 --analyst fundamentals --debug
+python main.py --tickers AAPL MSFT --date 2021-10-01 --analyst valuation --debug
+python main.py --tickers AAPL MSFT --date 2021-10-01 --analyst technical --debug
+python main.py --tickers AAPL MSFT --date 2021-10-01 --analyst risk --debug
+python main.py --tickers AAPL MSFT --date 2021-10-01 --analyst sentiment --debug
+python main.py --tickers AAPL MSFT --date 2021-10-01 --analyst macro --debug
+
+# Multiple tickers single analyst - main mode (saves to test folder)
+python main.py --tickers AAPL MSFT --date 2021-10-01 --analyst fundamentals
+python main.py --tickers AAPL MSFT --date 2021-10-01 --analyst valuation
+python main.py --tickers AAPL MSFT --date 2021-10-01 --analyst technical
+python main.py --tickers AAPL MSFT --date 2021-10-01 --analyst risk
+python main.py --tickers AAPL MSFT --date 2021-10-01 --analyst sentiment
+python main.py --tickers AAPL MSFT --date 2021-10-01 --analyst macro
+
+# =============================================================================
+# BATCH TICKER-DATE ANALYSIS (MULTIPLE DATES)
+# =============================================================================
+
+# Multiple tickers multiple dates complete analysis - debug mode (saves to test folder)
+python main.py --tickers AAPL MSFT GOOGL --dates 2021-10-01 2021-09-01 2021-08-01 --debug
+
+# Multiple tickers multiple dates complete analysis - main mode (saves to database)
+python main.py --tickers AAPL MSFT GOOGL --dates 2021-10-01 2021-09-01 2021-08-01
+
+# Multiple tickers multiple dates single analyst - debug mode (saves to test folder)
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 --analyst fundamentals --debug
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 --analyst valuation --debug
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 --analyst technical --debug
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 --analyst risk --debug
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 --analyst sentiment --debug
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 --analyst macro --debug
+
+# Multiple tickers multiple dates single analyst - main mode (saves to test folder)
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 --analyst fundamentals
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 --analyst valuation
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 --analyst technical
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 --analyst risk
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 --analyst sentiment
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 --analyst macro
+
+# =============================================================================
+# CUSTOM OUTPUT FILES (SAVED IN TEST FOLDER)
+# =============================================================================
+
+# Save results to custom file in test folder (overrides default behavior)
+python main.py --ticker MSFT --date 2021-10-01 --output results.json
+python main.py --tickers AAPL MSFT --date 2021-10-01 --output batch_results.json
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 --output ticker_date_results.json
+
+# =============================================================================
+# VERBOSE LOGGING
+# =============================================================================
+
+# Enable verbose logging for detailed output
+python main.py --ticker MSFT --date 2021-10-01 --verbose
+python main.py --tickers AAPL MSFT --date 2021-10-01 --verbose --debug
+
+# =============================================================================
+# COMPREHENSIVE BACKTESTING EXAMPLES
+# =============================================================================
+
+# Run complete analysis for all 25 tickers for first of each month 2021-2023
+# This creates 25 tickers × 36 months = 900 analyses
+python main.py --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --dates 2021-01-01 2021-02-01 2021-03-01 2021-04-01 2021-05-01 2021-06-01 2021-07-01 2021-08-01 2021-09-01 2021-10-01 2021-11-01 2021-12-01 2022-01-01 2022-02-01 2022-03-01 2022-04-01 2022-05-01 2022-06-01 2022-07-01 2022-08-01 2022-09-01 2022-10-01 2022-11-01 2022-12-01 2023-01-01 2023-02-01 2023-03-01 2023-04-01 2023-05-01 2023-06-01 2023-07-01 2023-08-01 2023-09-01 2023-10-01 2023-11-01 2023-12-01 --output comprehensive_backtest_2021_2023.json
+
+# Run technical analysis only for all 25 tickers for first of each month 2021-2023
+python main.py --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --dates 2021-01-01 2021-02-01 2021-03-01 2021-04-01 2021-05-01 2021-06-01 2021-07-01 2021-08-01 2021-09-01 2021-10-01 2021-11-01 2021-12-01 2022-01-01 2022-02-01 2022-03-01 2022-04-01 2022-05-01 2022-06-01 2022-07-01 2022-08-01 2022-09-01 2022-10-01 2022-11-01 2022-12-01 2023-01-01 2023-02-01 2023-03-01 2023-04-01 2023-05-01 2023-06-01 2023-07-01 2023-08-01 2023-09-01 2023-10-01 2023-11-01 2023-12-01 --analyst technical --output technical_backtest_2021_2023.json
+
+# Run with debug mode (saves individual files to test folder)
+python main.py --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --dates 2021-01-01 2021-02-01 2021-03-01 2021-04-01 2021-05-01 2021-06-01 2021-07-01 2021-08-01 2021-09-01 2021-10-01 2021-11-01 2021-12-01 2022-01-01 2022-02-01 2022-03-01 2022-04-01 2022-05-01 2022-06-01 2022-07-01 2022-08-01 2022-09-01 2022-10-01 2022-11-01 2022-12-01 2023-01-01 2023-02-01 2023-03-01 2023-04-01 2023-05-01 2023-06-01 2023-07-01 2023-08-01 2023-09-01 2023-10-01 2023-11-01 2023-12-01 --debug
+
+# =============================================================================
+# SINGLE TICKER SIGNAL GENERATION
+# =============================================================================
+
+# Generate signal for a single ticker (uses cached analysis if available, runs analysis if needed)
+python main.py --ticker MSFT --date 2021-10-01 --signal
+
+# Generate signal with debug mode (always reruns analysis and regenerates signals)
+python main.py --ticker MSFT --date 2021-10-01 --signal --debug
+
+# Generate signal with custom model (gpt-4o or gpt-4o-mini only)
+python main.py --ticker MSFT --date 2021-10-01 --signal --model gpt-4o
+
+# Generate signal with gpt-4o-mini model
+python main.py --ticker MSFT --date 2021-10-01 --signal --model gpt-4o-mini
+
+# Save signal result to file in test folder
+python main.py --ticker MSFT --date 2021-10-01 --signal --output signal_result.json
+
+# =============================================================================
+# BATCH TICKER SIGNAL GENERATION (SINGLE DATE)
+# =============================================================================
+
+# Generate signals for multiple tickers on a single date (uses cached analysis if available)
+python main.py --tickers AAPL MSFT GOOGL --date 2021-10-01 --signal
+
+# Generate signals with debug mode (always reruns analysis)
+python main.py --tickers AAPL MSFT GOOGL --date 2021-10-01 --signal --debug
+
+# Generate signals with custom model and save to file
+python main.py --tickers AAPL MSFT GOOGL --date 2021-10-01 --signal --model gpt-4o --output batch_signals.json
+
+# =============================================================================
+# BATCH TICKER-DATE SIGNAL GENERATION (MULTIPLE DATES)
+# =============================================================================
+
+# Generate signals for multiple tickers across multiple dates (uses cached analysis if available)
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 2021-08-01 --signal
+
+# Generate signals with debug mode (always reruns analysis)
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 2021-08-01 --signal --debug
+
+# Save ticker-date signals to file
+python main.py --tickers AAPL MSFT --dates 2021-10-01 2021-09-01 2021-08-01 --signal --output ticker_date_signals.json
+
+# =============================================================================
+# COMPREHENSIVE SIGNAL GENERATION EXAMPLES
+# =============================================================================
+
+# Generate signals for all 25 tickers for first of each month 2021-2023
+# This creates 25 tickers × 36 months = 900 signals (uses cached analysis if available)
+python main.py --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --dates 2021-01-01 2021-02-01 2021-03-01 2021-04-01 2021-05-01 2021-06-01 2021-07-01 2021-08-01 2021-09-01 2021-10-01 2021-11-01 2021-12-01 2022-01-01 2022-02-01 2022-03-01 2022-04-01 2022-05-01 2022-06-01 2022-07-01 2022-08-01 2022-09-01 2022-10-01 2022-11-01 2022-12-01 2023-01-01 2023-02-01 2023-03-01 2023-04-01 2023-05-01 2023-06-01 2023-07-01 2023-08-01 2023-09-01 2023-10-01 2023-11-01 2023-12-01 --signal --output comprehensive_signals_2021_2023.json
+
+# Generate signals with debug mode (always reruns analysis and regenerates signals)
+python main.py --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --dates 2021-01-01 2021-02-01 2021-03-01 2021-04-01 2021-05-01 2021-06-01 2021-07-01 2021-08-01 2021-09-01 2021-10-01 2021-11-01 2021-12-01 2022-01-01 2022-02-01 2022-03-01 2022-04-01 2022-05-01 2022-06-01 2022-07-01 2022-08-01 2022-09-01 2022-10-01 2022-11-01 2022-12-01 2023-01-01 2023-02-01 2023-03-01 2023-04-01 2023-05-01 2023-06-01 2023-07-01 2023-08-01 2023-09-01 2023-10-01 2023-11-01 2023-12-01 --signal --debug --output comprehensive_signals_2021_2023_debug.json
+
+# =============================================================================
+# PORTFOLIO MANAGER - CREATE PORTFOLIO
+# =============================================================================
+
+# Create a new portfolio with 10 tickers
+python main.py --create_portfolio --portfolio_name my_portfolio --portfolio_date 2021-01-01 --investment 100000 --num_tickers 10 --tickers AAPL MSFT NVDA AMZN META GOOGL AVGO TSLA BRK-B GOOG --risk normal
+
+# With risk and sector preferences
+python main.py --create_portfolio --portfolio_name my_portfolio --portfolio_date 2021-07-01 --investment 100000 --num_tickers 10 --tickers AAPL MSFT NVDA AMZN META GOOGL AVGO TSLA BRK-B GOOG --risk high --sectors "Information Technology" "Healthcare"
+
+# With a custom LLM model
+python main.py --create_portfolio --portfolio_name my_portfolio --portfolio_date 2021-10-01 --investment 100000 --num_tickers 10 --tickers AAPL MSFT NVDA AMZN META GOOGL AVGO TSLA BRK-B GOOG --risk normal --model gpt-4o-mini
+
+# Required arguments: --portfolio_name, --portfolio_date, --investment, --num_tickers, --tickers, --risk
+# Optional: --sectors, --model
+
+# =============================================================================
+# PORTFOLIO MANAGER - REBALANCE PORTFOLIO
+# =============================================================================
+
+# Rebalance an existing portfolio (same name, later date)
+python main.py --rebalance_portfolio --portfolio_name my_portfolio --rebalance_date 2021-04-01 --num_tickers 10 --tickers AAPL MSFT NVDA AMZN META GOOGL AVGO TSLA BRK-B GOOG --risk normal
+
+# With risk and sector preferences
+python main.py --rebalance_portfolio --portfolio_name my_portfolio --rebalance_date 2021-07-01 --num_tickers 10 --tickers AAPL MSFT NVDA AMZN META GOOGL AVGO TSLA BRK-B GOOG --risk high --sectors "Information Technology" "Healthcare"
+     
+# With a custom LLM model
+python main.py --rebalance_portfolio --portfolio_name my_portfolio --rebalance_date 2021-10-01 --num_tickers 10 --tickers AAPL MSFT NVDA AMZN META GOOGL AVGO TSLA BRK-B GOOG --risk normal --model gpt-4o-mini
+
+# Required arguments: --portfolio_name, --rebalance_date, --num_tickers, --tickers, --risk
+# Optional: --sectors, --model
+
+# =============================================================================
+# PORTFOLIO MANAGER - MANAGE PORTFOLIO
+# =============================================================================
+
+# Create and manage a portfolio
+python main.py --manage_portfolio --portfolio_name my_portfolio --start_date 2021-04-01 --end_date 2021-12-31 --num_tickers 10 --tickers AAPL MSFT NVDA AMZN META GOOGL AVGO TSLA BRK-B GOOG --risk normal --investment 100000 --frequency monthly
+
+# With risk and sector preferences
+python main.py --manage_portfolio --portfolio_name my_portfolio --start_date 2021-07-01 --end_date 2021-12-31 --num_tickers 10 --tickers AAPL MSFT NVDA AMZN META GOOGL AVGO TSLA BRK-B GOOG --risk high --sectors "Information Technology" "Healthcare" --investment 100000 --frequency monthly
+     
+# With a custom LLM model
+python main.py --manage_portfolio --portfolio_name my_portfolio --start_date 2021-10-01 --end_date 2021-12-31 --num_tickers 10 --tickers AAPL MSFT NVDA AMZN META GOOGL AVGO TSLA BRK-B GOOG --risk normal --model gpt-4o-mini --investment 100000 --frequency monthly
+
+# Required arguments: --portfolio_name, --start_date, --end_date, --num_tickers, --tickers, --risk, --investment, --frequency
+# Optional: --sectors, --model
+
+
+# =============================================================================
+# PORTFOLIO MANAGER - TESTING
+# =============================================================================
+
+## DATABASE CREATION - copy sentiment analysis from aipm_thesis.db to save 25 USD
+python create_db.py --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --start-date 2018-01-01 --end-date 2025-07-30
+
+
+## FREQUENCY
+
+# fully_managed_10_25_monthly
+python main.py --manage_portfolio --portfolio_name fully_managed_10_25_monthly --start_date 2021-01-01 --end_date 2024-01-01 --num_tickers 10 --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --risk normal --investment 100000 --frequency monthly
+
+# fully_managed_10_25_quarterly
+python main.py --manage_portfolio --portfolio_name fully_managed_10_25_quarterly --start_date 2021-01-01 --end_date 2024-01-01 --num_tickers 10 --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --risk normal --investment 100000 --frequency quarterly
+
+
+## RISK
+
+# fully_managed_10_25_quarterly_risk_high
+python main.py --manage_portfolio --portfolio_name fully_managed_10_25_quarterly_risk_high --start_date 2021-01-01 --end_date 2024-01-01 --num_tickers 10 --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --risk high --investment 100000 --frequency quarterly
+
+# fully_managed_10_25_quarterly_risk_low
+python main.py --manage_portfolio --portfolio_name fully_managed_10_25_quarterly_risk_low --start_date 2021-01-01 --end_date 2024-01-01 --num_tickers 10 --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --risk low --investment 100000 --frequency quarterly
+
+
+## MODELS
+
+# fully_managed_10_25_quarterly_gpt4omini
+python main.py --manage_portfolio --portfolio_name fully_managed_10_25_quarterly_gpt4omini --start_date 2021-01-01 --end_date 2024-01-01 --num_tickers 10 --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --risk normal --investment 100000 --frequency quarterly --model gpt-4o-mini
+
+# fully_managed_10_25_quarterly_gpt41
+python main.py --manage_portfolio --portfolio_name fully_managed_10_25_quarterly_gpt41 --start_date 2021-01-01 --end_date 2024-01-01 --num_tickers 10 --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --risk normal --investment 100000 --frequency quarterly --model gpt-4.1
+
+# fully_managed_10_25_quarterly_o3mini
+python main.py --manage_portfolio --portfolio_name fully_managed_10_25_quarterly_o3mini --start_date 2021-01-01 --end_date 2024-01-01 --num_tickers 10 --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --risk normal --investment 100000 --frequency quarterly --model o3-mini
+
+# fully_managed_10_25_quarterly_o4mini
+python main.py --manage_portfolio --portfolio_name fully_managed_10_25_quarterly_o4mini --start_date 2021-01-01 --end_date 2024-01-01 --num_tickers 10 --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --risk normal --investment 100000 --frequency quarterly --model o4-mini
+
+# fully_managed_10_25_quarterly_gpt5
+python main.py --manage_portfolio --portfolio_name fully_managed_10_25_quarterly_gpt5 --start_date 2021-01-01 --end_date 2024-01-01 --num_tickers 10 --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --risk normal --investment 100000 --frequency quarterly --model gpt-5
+
+
+## SECTOR
+
+# fully_managed_10_25_quarterly_tech
+python main.py --manage_portfolio --portfolio_name fully_managed_10_25_quarterly_tech --start_date 2021-01-01 --end_date 2024-01-01 --num_tickers 10 --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --risk normal --investment 100000 --frequency quarterly --sectors "Technology"
+
+# fully_managed_10_25_quarterly_fin_ser
+python main.py --manage_portfolio --portfolio_name fully_managed_10_25_quarterly_fin_ser --start_date 2021-01-01 --end_date 2024-01-01 --num_tickers 10 --tickers AAPL NVDA MSFT AMZN META GOOGL AVGO TSLA BRK-B GOOG JPM LLY V XOM COST MA UNH NFLX WMT PG JNJ HD ABBV BAC CRM --risk normal --investment 100000 --frequency quarterly --sectors "Financial Services"
+
+

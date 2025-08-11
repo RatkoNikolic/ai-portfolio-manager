@@ -1,0 +1,17 @@
+graph LR
+    A[Analysis Outputs] --> B[Signal Analyst]
+    B --> C[LLM Processing]
+    C --> D[Structured JSON]
+    D --> E[Database Storage]
+    
+    subgraph "LLM Processing"
+        C1[Parse Multi-Analyst Data]
+        C2[Generate Signal & Confidence]
+        C3[Extract Key Insights]
+        C4[Create Explanation]
+    end
+    
+    C --> C1
+    C1 --> C2
+    C2 --> C3
+    C3 --> C4

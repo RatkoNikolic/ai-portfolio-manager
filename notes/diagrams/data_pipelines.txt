@@ -1,0 +1,43 @@
+graph LR
+    subgraph "External Sources"
+        AV[Alpha Vantage<br/>Financial Statements]
+        YF[Yahoo Finance<br/>Price Data]
+        FRED[FRED API<br/>Macro Data]
+        OAI[OpenAI<br/>Sentiment & Signals]
+    end
+    
+    subgraph "ETL Layer"
+        ETL[Data Collection<br/>Scripts]
+    end
+    
+    subgraph "Storage Layer"
+        DB[(SQLite Database<br/>10 Tables)]
+    end
+    
+    subgraph "Processing Layer"
+        AN[6 Analysts]
+        LLM[LLM Components]
+    end
+    
+    subgraph "Output Layer"
+        JSON[Analysis Outputs]
+        SIG[Trading Signals]
+        PORT[Portfolio States]
+    end
+    
+    AV --> ETL
+    YF --> ETL
+    FRED --> ETL
+    ETL --> DB
+    
+    DB --> AN
+    AN --> LLM
+    OAI --> LLM
+    
+    LLM --> JSON
+    LLM --> SIG
+    LLM --> PORT
+    
+    JSON --> DB
+    SIG --> DB
+    PORT --> DB

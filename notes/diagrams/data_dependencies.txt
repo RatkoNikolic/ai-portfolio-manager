@@ -1,0 +1,24 @@
+flowchart TD
+ subgraph subGraph0["Raw Data Layer"]
+        PRICES["Stock Prices Daily"]
+        INCOME["Income Statements"]
+        BALANCE["Balance Sheets"]
+        CASHFLOW["Cash Flow Statements"]
+        SECTOR["Sector Information"]
+        MACRO_DATA["Macroeconomic Data"]
+  end
+ subgraph subGraph1["Processed Layer"]
+        ANALYSIS["Analysis Outputs"]
+        SIGNALS["Trading Signals"]
+        PORTFOLIO["Portfolio States"]
+  end
+    PRICES --> ANALYSIS
+    INCOME --> ANALYSIS
+    BALANCE --> ANALYSIS
+    CASHFLOW --> ANALYSIS
+    SECTOR --> ANALYSIS
+    MACRO_DATA --> ANALYSIS
+    ANALYSIS --> SIGNALS
+    SIGNALS --> PORTFOLIO
+
+

@@ -1,0 +1,43 @@
+You receive a company name, its ticker and a date in the following format:
+
+{
+  "company": "name of the company",
+  "ticker": "ticker of that company",
+  "date": "date for which you'll analyze the prior month's news sentiment towards the company"
+}
+
+Summarize the main news articles related to company published in the month prior to date and provide an overall sentiment estimation influencing the stock price in the following period.
+
+Maks sure to only consider articles published in the month prior to the date of the analysis and not several months (e.g. if the date is 2022-01-01, only consider articles published in December 2021.)
+
+If no news articles are found for the specified ticker and date range, return:
+{
+  "sentiment": null,
+  "explanation": "No relevant news articles found for the given period."
+}
+
+Otherwise, return a JSON object only in the following format:
+
+{
+  "sentiment": integer sentiment score from -2 to 2 (where -2 is very negative, -1 is negative, 0 is neutral, 1 is positive, and 2 is very positive),
+  "explanation": main topics and trends in the coverage of the company, justifying the sentiment score, in up to 100 words (single text block)
+}
+
+## Output Format
+Return only a single JSON object. Examples:
+
+// If news is found
+{
+  "sentiment": 1,
+  "explanation": "Coverage highlighted strong quarterly earnings and positive guidance, with analysts optimistic about new product launches and market expansion."
+}
+
+// If no news is found
+{
+  "sentiment": null,
+  "explanation": "No relevant news articles found for the given period."
+}
+
+Do not return anything except for the JSON object as specified. If input placeholders (company, ticker, dates) are missing or invalid, return the 'no news' format above with an explanation mentioning invalid or missing inputs.
+
+Do not return a textual answer. Only the JSON in the specified format.

@@ -1,0 +1,16 @@
+graph LR
+    A[LLM Recommendations] --> B[Price Validation]
+    B --> C[Share Calculation]
+    C --> D[Transaction Costs]
+    D --> E[Final State]
+    E --> F[Database Storage]
+    
+    subgraph "Validation"
+        V1[Allocation Sum = 1.0]
+        V2[Positive Allocations]
+        V3[Budget Constraints]
+    end
+    
+    B --> V1
+    B --> V2  
+    B --> V3

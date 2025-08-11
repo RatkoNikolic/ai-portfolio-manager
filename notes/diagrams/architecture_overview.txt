@@ -1,0 +1,37 @@
+---
+config:
+  layout: fixed
+---
+flowchart TB
+ subgraph subGraph0["Data Sources"]
+        DB[("SQLite Database")]
+        LIVE["Live Market Data"]
+  end
+ subgraph subGraph1["Core Analysts"]
+        FUND["Fundamentals Analyst"]
+        VAL["Valuation Analyst"]
+        TECH["Technical Analyst"]
+        RISK["Risk Analyst"]
+        SENT["Sentiment Analyst"]
+        MACRO["Macro Analyst"]
+  end
+ subgraph subGraph2["AI Decision Layer"]
+        SIGNAL["Signal Analyst<br>LLM"]
+        PORT["Portfolio Manager<br>LLM"]
+  end
+ subgraph Orchestration["Orchestration"]
+        ORCH["Orchestrator"]
+        DM["Data Manager"]
+  end
+    DB --> DM
+    LIVE --> DM
+    DM --> FUND & VAL & TECH & RISK & SENT & MACRO
+    FUND --> ORCH
+    VAL --> ORCH
+    TECH --> ORCH
+    RISK --> ORCH
+    SENT --> ORCH
+    MACRO --> ORCH
+    ORCH --> SIGNAL
+    SIGNAL --> PORT
+    PORT --> DB
