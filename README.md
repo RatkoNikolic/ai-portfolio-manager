@@ -24,7 +24,7 @@ This project is part of the **master's thesis** *"Automating Portfolio Managemen
 
 **🤖 AI-Powered Decision Layer**
 - **Signal Analyst**: LLM-based trading signal generation from multi-analyst outputs (supports: gpt-4o, gpt-4o-mini)
-- **Portfolio Manager**: Intelligent portfolio construction, rebalancing, and management (supports: gpt-4o, gpt-4o-mini, gpt-4.1, gpt-4.1-mini, o3-mini, o4-mini)
+- **Portfolio Manager**: Intelligent portfolio construction, rebalancing, and management (supports: gpt-4o, gpt-4o-mini, gpt-4.1, gpt-4.1-mini, o3-mini, o4-mini, gpt-5)
 - **Orchestrator**: Coordinates all components with automatic dependency management
 
 **💾 Data Management**
@@ -194,7 +194,7 @@ The Portfolio Manager supports a broader range of models than the Signal Analyst
 - `gpt-4.1-mini` 
 - `o3-mini`
 - `o4-mini`
-- `gpt-5` - OpenAI GPT-5
+- `gpt-5` 
 
 #### Create Portfolio
 ```bash
